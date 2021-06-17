@@ -22,5 +22,11 @@ class ProductPage(BasePage):
         print(f"\n{product_name_card} has been added to your basket.")
         print(f"\nyour basket total is now {product_price_card}.")
         
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Sucess message is presented, but should not be"
+
+    def should_see_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message lost, but should not be"
+        
         
         
