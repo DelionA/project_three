@@ -7,6 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 class ProductPage(BasePage):
+    def add_product_to_card_single(self):
+        button = self.browser.find_element(*ProductPageLocators.BTN_ADD_TO_BASKET)
+        button.click()
+
     def add_product_to_card(self):
         button = self.browser.find_element(*ProductPageLocators.BTN_ADD_TO_BASKET)
         button.click()
@@ -27,6 +31,4 @@ class ProductPage(BasePage):
 
     def should_see_success_message(self):
         assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message lost, but should not be"
-        
-        
-        
+
