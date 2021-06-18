@@ -15,4 +15,8 @@ class BasePageLocators():
     REGISTER_FORM_EMAIL = (By.CSS_SELECTOR, "#id_registration-email")
     REGISTER_FORM_PASSWORD = (By.CSS_SELECTOR, "#id_registration-password1")
     REGISTER_FORM_PASSWORD_CONFIRM = (By.CSS_SELECTOR, "#id_registration-password2")
-    
+
+class BasketPageLocators():
+    BASKET_BUTTON = (By.CSS_SELECTOR, ".btn-group a.btn-default")
+    BASKET_FORMSET = (By.CSS_SELECTOR, "#basket_formset")
+    BASKET_EMPTY_MESSAGE = (By.CSS_SELECTOR, "#content_inner>p")
