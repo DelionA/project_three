@@ -1,34 +1,40 @@
-
+#
 from .base_page import BasePage
-#from selenium.webdriver.common.by import By
 from .locators import ProductPageLocators
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 
 class ProductPage(BasePage):
-    def add_product_to_card_single(self):
-        button = self.browser.find_element(*ProductPageLocators.BTN_ADD_TO_BASKET)
-        button.click()
-
     def add_product_to_card(self):
         button = self.browser.find_element(*ProductPageLocators.BTN_ADD_TO_BASKET)
         button.click()
-        self.solve_quiz_and_get_code()
+
+    def should_be_message_add_product_to_basket(self):
+        assert self.is_element_present(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_BASKET) , \
+                                              "message of product add to basket not present"
+        message_product_add_to_card = \
+            self.browser.find_element(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_BASKET).text
+        print(message_product_add_to_card)
+        message_product_name = \
+            self.browser.find_element(*ProductPageLocators.MESSAGE_PRODUCT_NAME).text
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-        product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
-        time.sleep(5)
-        product_name_and_price_card = self.browser.find_elements(*ProductPageLocators.PRODUCT_NAME_AND_PRICE_CARD)
-        product_name_card = product_name_and_price_card[0].text
-        product_price_card = product_name_and_price_card[2].text
-        assert product_name_card == product_name, f"product name not match, expected {product_name}"
-        assert product_price_card == product_price, f"product price not math, expected {product_price}"
-        print(f"\n{product_name_card} has been added to your basket.")
-        print(f"\nyour basket total is now {product_price_card}.")
-        
+        assert message_product_name == product_name, \
+                                 "product name in message of add to basket not match"
+        assert self.is_element_present(*ProductPageLocators.MESSAGE_OF_PRICE_BASKET), \
+                                               "message of price basket not present"
+        message_price_basket = \
+            self.browser.find_element(*ProductPageLocators.MESSAGE_OF_PRICE_BASKET).text
+        print(message_price_basket)
+        price_product_message = \
+            self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT_MESSAGE).text
+        price_product = self.browser.find_element(*ProductPageLocators.PRICE_PRODUCT).text
+        assert price_product_message == price_product, \
+                                      "product price in message of add to basket not match"
+
     def should_not_be_success_message(self):
-        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Sucess message is presented, but should not be"
+        assert self.is_not_element_present(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_BASKET), \
+                                               "Sucess message is presented, but should not be"
 
-    def should_see_success_message(self):
-        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), "Success message lost, but should not be"
-
+    def should_see_success_message_is_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_BASKET), \
+                                              "Success message present, but should not be"
